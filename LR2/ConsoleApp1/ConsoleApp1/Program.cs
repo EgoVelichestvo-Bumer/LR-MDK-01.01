@@ -61,3 +61,21 @@ class Program
 
         return order;
     }
+    static bool CheckOrder(
+        string[] names,
+        int[] stock,
+        int[] order,
+        out int notEnoughIndex)
+    {
+        for (int i = 0; i < stock.Length; i++)
+        {
+            if (order[i] > stock[i]) 
+            {
+                notEnoughIndex = i;
+                return false;
+            }
+        }
+
+        notEnoughIndex = -1;
+        return true;
+    }
