@@ -29,3 +29,18 @@ class Program
             Console.WriteLine("Ошибка! Введите число от 0 до 5.");
         }
     }
+    static int ReadQuantity()
+    {
+        while (true)
+        {
+            Console.Write("Введите количество: ");
+
+            if (int.TryParse(Console.ReadLine(), out int quantity) &&
+                quantity >= 0)
+            {
+                return quantity;
+            }
+
+            Console.WriteLine("Ошибка! Количество не может быть меньше нуля.");
+        }
+    }
