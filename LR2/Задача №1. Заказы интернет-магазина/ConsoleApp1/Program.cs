@@ -97,3 +97,12 @@ class Program
             stock[i] -= order[i];
         }
     }
+    static void PrintStock(string[] names, int[] stock)
+    {
+        Console.WriteLine("Остатки на складе:");
+
+        for (int i = 0; i < names.Length; i++)
+        {
+            Console.WriteLine($"{names[i]}: {stock[i]}");
+        }
+    }
