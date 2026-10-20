@@ -90,3 +90,10 @@ class Program
 
         return cost;
     }
+    static void UpdateStock(int[] stock, int[] order)
+    {
+        for (int i = 0; i < stock.Length; i++)
+        {
+            stock[i] -= order[i];
+        }
+    }
