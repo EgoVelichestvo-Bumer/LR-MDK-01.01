@@ -79,3 +79,14 @@ class Program
         notEnoughIndex = -1;
         return true;
     }
+    static int CalculateCost(int[] prices, int[] order)
+    {
+        int cost = 0;
+
+        for (int i = 0; i < prices.Length; i++)
+        {
+            cost += prices[i] * order[i]; 
+        }
+
+        return cost;
+    }
