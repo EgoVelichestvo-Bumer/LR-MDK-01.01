@@ -44,3 +44,20 @@ class Program
             Console.WriteLine("Ошибка! Количество не может быть меньше нуля.");
         }
     }
+    static int[] CreateOrder(int[] prices, int[] stock)
+    {
+        int[] order = new int[5];
+
+        while (true)
+        {
+            int number = ReadProductNumber();
+
+            if (number == 0)
+                break;
+
+            int quantity = ReadQuantity();
+            order[number - 1] += quantity;
+        }
+
+        return order;
+    }
