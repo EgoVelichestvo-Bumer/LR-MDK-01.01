@@ -14,3 +14,18 @@ class Program
 
         Console.WriteLine();
     }
+    static int ReadProductNumber()
+    {
+        while (true)
+        {
+            Console.Write("Введите номер товара (0 — конец заказа): ");
+
+            if (int.TryParse(Console.ReadLine(), out int number) &&
+                number >= 0 && number <= 5)
+            {
+                return number;
+            }
+
+            Console.WriteLine("Ошибка! Введите число от 0 до 5.");
+        }
+    }
