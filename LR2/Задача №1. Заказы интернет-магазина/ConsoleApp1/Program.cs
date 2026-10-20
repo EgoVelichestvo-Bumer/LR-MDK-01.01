@@ -106,3 +106,38 @@ class Program
             Console.WriteLine($"{names[i]}: {stock[i]}");
         }
     }
+    static void Main()
+    {
+        string[] names =
+        {
+            "хлеб",
+            "молоко",
+            "сыр",
+            "колбаса",
+            "масло"
+        };
+
+        int[] prices = { 45, 80, 350, 420, 120 };
+        int[] stock = { 30, 25, 12, 8, 15 };
+
+        PrintPriceList(names, prices, stock);        
+
+        int[] order = CreateOrder(prices, stock);     
+
+        if (CheckOrder(names, stock, order, out int notEnoughIndex))
+        {
+            int cost = CalculateCost(prices, order); 
+            UpdateStock(stock, order);               
+
+            Console.WriteLine($"Стоимость заказа: {cost} руб.");
+        }
+        else
+        {
+            Console.WriteLine(
+                $"Товара \"{names[notEnoughIndex]}\" недостаточно на складе.");
+        }
+
+        Console.WriteLine();
+        PrintStock(names, stock);                    
+    }
+}
