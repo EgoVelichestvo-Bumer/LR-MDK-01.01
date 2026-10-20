@@ -2,7 +2,7 @@
 
 class Program
 {
-    
+
     static void PrintPriceList(string[] names, int[] prices, int[] stock)
     {
         Console.WriteLine("Прайс-лист:");
