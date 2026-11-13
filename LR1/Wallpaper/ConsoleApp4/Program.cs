@@ -55,6 +55,7 @@ namespace Wallpaper
                 }
                 Console.WriteLine("Ошибка: введите число больше нуля.");
             }
+        }
             static int CalculateStripsPerRoom(double length, double width, double rollWidth)
             {
                 double perimeter = (length + width) * 2;
@@ -77,5 +78,11 @@ namespace Wallpaper
                 }
                 return (int)Math.Ceiling((double)totalStrips / stripsPerRoll);
             }
-        }
-    }
+        
+            static void ShowResult(int stripsNeeded, int totalRolls)
+            {
+                Console.WriteLine($"Количество полос:    {stripsNeeded}");
+                Console.WriteLine($"Количество рулонов:  {totalRolls}");
+            }
+  }
+}
