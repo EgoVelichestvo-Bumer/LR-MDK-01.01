@@ -2,7 +2,7 @@
 
 namespace DogFood
 {
-    class Program
+   public class Program
     {
 
         static void Main(string[] args)
@@ -67,6 +67,8 @@ namespace DogFood
                 }
                 Console.WriteLine($"Ошибка: введите целое число от {min} до {max}.");
             }
+        }
+
             static double CalculateDailyNorm(double weight, int ageType, int activityLevel)
             {
                 double basePerKg = (ageType == 1) ? 55 : 30;
@@ -83,7 +85,12 @@ namespace DogFood
 
                 return norm;
             }
-        }
-    }
+            static void ShowResult(double dailyNorm)
+            {
+                Console.WriteLine($"Суточная норма корма: {dailyNorm:F2} г");
+                Console.WriteLine($"Одна порция (2 кормления в день): {dailyNorm / 2:F2} г");
+
+            }
+        
     }
 }
