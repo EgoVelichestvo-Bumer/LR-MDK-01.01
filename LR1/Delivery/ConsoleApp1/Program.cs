@@ -2,7 +2,7 @@
 
 namespace Delivery
 {
-    class Program
+   public class Program
     {
         static void Main(string[] args)
         {         
@@ -18,6 +18,10 @@ namespace Delivery
 
             Console.WriteLine("Нажмите Enter для выхода...");
             Console.ReadLine();
+        }
+        static double GetOrderCost()
+        {
+            return ReadPositiveDouble("Введите стоимость заказа (руб.): ");
         }
     }
     }
