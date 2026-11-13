@@ -18,5 +18,13 @@ namespace IMT
                 Console.WriteLine("\nНажмите Enter для выхода...");
                 Console.ReadLine();
             }
+            static double GetHeight()
+            {
+                return ReadPositiveDouble("Введите ваш рост (см): ");
+            }
+            static double GetWeight()
+            {
+                return ReadPositiveDouble("Введите ваш вес (кг): ");
+            }
         }
     }
