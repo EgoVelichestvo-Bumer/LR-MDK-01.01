@@ -67,6 +67,22 @@ namespace DogFood
                 }
                 Console.WriteLine($"Ошибка: введите целое число от {min} до {max}.");
             }
+            static double CalculateDailyNorm(double weight, int ageType, int activityLevel)
+            {
+                double basePerKg = (ageType == 1) ? 55 : 30;
+                double norm = basePerKg * weight;
+
+                if (activityLevel == 1)
+                {
+                    norm *= 0.9;
+                }
+                else if (activityLevel == 3)
+                {
+                    norm *= 1.2;
+                }
+
+                return norm;
+            }
         }
     }
     }
