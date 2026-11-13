@@ -2,7 +2,7 @@
 
 namespace Train
 {
- public class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -55,18 +55,54 @@ namespace Train
 
             return moveMinutes + stopMinutes;
         }
+        static double ReadPositiveDouble(string prompt)
+        {
+            double value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out value) && value > 0)
+                    return value;
+                Console.WriteLine("Ошибка: введите число больше нуля.");
+            }
+        }
+
+        static int ReadNonNegativeInt(string prompt)
+        {
+            int value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out value) && value >= 0)
+                    return value;
+                Console.WriteLine("Ошибка: введите неотрицательное целое число.");
+            }
+        }
+
+        static double ReadNonNegativeDouble(string prompt)
+        {
+            double value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out value) && value >= 0)
+                    return value;
+                Console.WriteLine("Ошибка: введите неотрицательное число.");
+            }
+        }
         static int ReadIntRange(string prompt, int min, int max)
         {
             int value;
-            while (true) 
+            while (true)
             {
                 Console.Write(prompt);
                 if (int.TryParse(Console.ReadLine(), out value) && value >= min && value <= max)
                 {
-                    return value; 
+                    return value;
                 }
                 Console.WriteLine($"Ошибка: введите число от {min} до {max}.");
             }
+        }
             static string CalculateArrivalTime(int h, int m, double travelMinutesTotal)
             {
                 int startTotalMinutes = h * 60 + m;
@@ -75,6 +111,12 @@ namespace Train
                 int arrH = arrivalTotalMinutes / 60;
                 int arrM = arrivalTotalMinutes % 60;
 
-                return
-            }
+                return $"{arrH:D2}:{arrM:D2}";
         }
+            static void ShowResult(int travelH, int travelM, string arrivalTime)
+            {
+                Console.WriteLine($"Время в пути:      {travelH} ч {travelM} мин");
+                Console.WriteLine($"Время прибытия:    {arrivalTime}");
+            }
+    }
+}
