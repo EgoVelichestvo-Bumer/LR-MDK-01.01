@@ -69,7 +69,13 @@ namespace Wallpaper
                 }
                 return (int)(rollLength / stripHeight);
             }
-
+            static int CalculateTotalRolls(int totalStrips, int stripsPerRoll)
+            {
+                if (stripsPerRoll <= 0)
+                {
+                    return 0;
+                }
+                return (int)Math.Ceiling((double)totalStrips / stripsPerRoll);
             }
         }
     }
