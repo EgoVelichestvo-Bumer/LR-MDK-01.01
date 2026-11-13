@@ -24,3 +24,27 @@ namespace Train
             Console.WriteLine("\nНажмите Enter для выхода...");
             Console.ReadLine();
         }
+        static int GetDepartureHour()
+        {
+            return ReadIntRange("Введите время отправления (часы, 0-23): ", 0, 23);
+        }
+        static int GetDepartureMinute()
+        {
+            return ReadIntRange("Введите время отправления (минуты, 0-59): ", 0, 59);
+        }
+        static double GetDistance()
+        {
+            return ReadPositiveDouble("Введите расстояние (км): ");
+        }
+        static double GetSpeed()
+        {
+            return ReadPositiveDouble("Введите среднюю скорость (км/ч): ");
+        }
+        static int GetNumberOfStops()
+        {
+            return ReadNonNegativeInt("Введите число остановок: ");
+        }
+        static double GetStopDuration()
+        {
+            return ReadNonNegativeDouble("Введите время одной остановки (мин): ");
+        }
