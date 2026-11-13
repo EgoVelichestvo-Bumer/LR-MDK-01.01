@@ -40,6 +40,34 @@ namespace DogFood
             Console.WriteLine("  3 — высокая (много бегает, работает)");
             return ReadIntRange("Ваш выбор (1, 2 или 3): ", 1, 3);
         }
+        static double ReadPositiveDouble(string prompt)
+        {
+            double value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out value) && value > 0)
+                {
+                    return value;
+                }
+                Console.WriteLine("Ошибка: введите число больше нуля.");
+            }
+        }
+
+
+        static int ReadIntRange(string prompt, int min, int max)
+        {
+            int value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out value) && value >= min && value <= max)
+                {
+                    return value;
+                }
+                Console.WriteLine($"Ошибка: введите целое число от {min} до {max}.");
+            }
+        }
     }
     }
 }
