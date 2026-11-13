@@ -31,8 +31,16 @@ namespace Delivery
         {
             return ReadHour("Введите время заказа (час от 0 до 23): ");
         }
+        static double CalculateDeliveryCost(double orderCost, double distance, int hour)
+        {
 
-    }
+            if (orderCost >= 2000)
+            {
+                return 0;
+            }
+
+            double cost = 150;
+        }
 
 }
 }
