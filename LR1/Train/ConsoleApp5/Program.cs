@@ -48,6 +48,13 @@ namespace Train
         {
             return ReadNonNegativeDouble("Введите время одной остановки (мин): ");
         }
+        static double CalculateTravelTimeMinutes(double dist, double speed, int stops, double stopDur)
+        {
+            double moveMinutes = (dist / speed) * 60;
+            double stopMinutes = stops * stopDur;
+
+            return moveMinutes + stopMinutes;
+        }
         static int ReadIntRange(string prompt, int min, int max)
         {
             int value;
@@ -59,5 +66,15 @@ namespace Train
                     return value; 
                 }
                 Console.WriteLine($"Ошибка: введите число от {min} до {max}.");
+            }
+            static string CalculateArrivalTime(int h, int m, double travelMinutesTotal)
+            {
+                int startTotalMinutes = h * 60 + m;
+                int arrivalTotalMinutes = (int)(startTotalMinutes + travelMinutesTotal);
+                arrivalTotalMinutes = arrivalTotalMinutes % (24 * 60);
+                int arrH = arrivalTotalMinutes / 60;
+                int arrM = arrivalTotalMinutes % 60;
+
+                return
             }
         }
