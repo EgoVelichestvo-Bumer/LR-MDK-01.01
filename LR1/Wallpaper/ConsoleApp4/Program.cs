@@ -55,5 +55,21 @@ namespace Wallpaper
                 }
                 Console.WriteLine("Ошибка: введите число больше нуля.");
             }
+            static int CalculateStripsPerRoom(double length, double width, double rollWidth)
+            {
+                double perimeter = (length + width) * 2;
+                return (int)Math.Ceiling(perimeter / rollWidth);
+            }
+            static int CalculateStripsPerRoll(double rollLength, double roomHeight)
+            {
+                double stripHeight = roomHeight + 0.1;
+                if (stripHeight <= 0)
+                {
+                    return 0;
+                }
+                return (int)(rollLength / stripHeight);
+            }
+
+            }
         }
     }
