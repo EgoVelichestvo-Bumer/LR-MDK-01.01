@@ -48,3 +48,16 @@ namespace Train
         {
             return ReadNonNegativeDouble("Введите время одной остановки (мин): ");
         }
+        static int ReadIntRange(string prompt, int min, int max)
+        {
+            int value;
+            while (true) 
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out value) && value >= min && value <= max)
+                {
+                    return value; 
+                }
+                Console.WriteLine($"Ошибка: введите число от {min} до {max}.");
+            }
+        }
