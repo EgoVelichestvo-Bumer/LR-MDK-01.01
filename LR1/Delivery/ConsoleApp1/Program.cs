@@ -69,7 +69,17 @@ namespace Delivery
             }
 
             double cost = 150;
+            return cost;
         }
+        static void ShowResult(double deliveryCost, double orderCost)
+        {
+            Console.WriteLine($"Стоимость доставки: {deliveryCost:F2} руб."); 
+            Console.WriteLine($"Стоимость заказа:   {orderCost:F2} руб.");
+            Console.WriteLine($"ИТОГО К ОПЛАТЕ:     {orderCost + deliveryCost:F2} руб.");
+        }
+    }
+}
+        
 
-}
-}
+
+
