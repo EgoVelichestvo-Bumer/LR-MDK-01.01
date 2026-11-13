@@ -27,6 +27,12 @@ namespace Delivery
         {
             return ReadPositiveDouble("Введите расстояние доставки (км): ");
         }
+        static int GetDeliveryHour()
+        {
+            return ReadHour("Введите время заказа (час от 0 до 23): ");
+        }
+
     }
-    }
+
+}
 }
