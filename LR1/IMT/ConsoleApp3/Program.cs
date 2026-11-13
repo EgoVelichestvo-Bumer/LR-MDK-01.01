@@ -38,12 +38,9 @@ namespace IMT
                     }
                     Console.WriteLine("Ошибка: введите число больше нуля.");
                 }
-                static double GetHeight()
+                static double CalculateBMI(double heightCm, double weightKg)
                 {
-                    return ReadPositiveDouble("Введите ваш рост (см):");
+                    double heightM = heightCm / 100.0;
+                    return weightKg / (heightM * heightM);
                 }
-                static double GetWeight()
-                {
-                    return ReadPositiveDouble("Введите ваш вес(кг):");
-                }
-    }
+            }
