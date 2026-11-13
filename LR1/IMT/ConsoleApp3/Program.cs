@@ -6,18 +6,16 @@ namespace IMT
     {
         static void Main(string[] args)
         {
-            static void Main(string[] args)
-            {
-                double height = GetHeight();
-                double weight = GetWeight();
-                double bmi = CalculateBMI(height, weight);
+            double height = GetHeight();
+            double weight = GetWeight();
+            double bmi = CalculateBMI(height, weight);
 
-                string category = GetCategoryAndAdvice(bmi, out string advice);
+            string category = GetCategoryAndAdvice(bmi, out string advice);
 
-                ShowResult(bmi, category, advice);
-                Console.WriteLine("\nНажмите Enter для выхода...");
-                Console.ReadLine();
-            }
+            ShowResult(bmi, category, advice);
+            Console.WriteLine("\nНажмите Enter для выхода...");
+            Console.ReadLine();
+        }
             static double GetHeight()
             {
                 return ReadPositiveDouble("Введите ваш рост (см): ");
@@ -26,22 +24,24 @@ namespace IMT
             {
                 return ReadPositiveDouble("Введите ваш вес (кг): ");
             }
-            static double ReadPositiveDouble(string prompt)
+        static double ReadPositiveDouble(string prompt)
+        {
+            double value;
+            while (true)
             {
-                double value;
-                while (true)
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out value) && value > 0)
                 {
-                    Console.Write(prompt);
-                    if (double.TryParse(Console.ReadLine(), out value) && value > 0)
-                    {
-                        return value;
-                    }
-                    Console.WriteLine("Ошибка: введите число больше нуля.");
+                    return value;
                 }
-                static double CalculateBMI(double heightCm, double weightKg)
-                {
-                    double heightM = heightCm / 100.0;
-                    return weightKg / (heightM * heightM);
+                Console.WriteLine("Ошибка: введите число больше нуля.");
+            }
+        }
+        static double CalculateBMI(double heightCm, double weightKg)
+        {
+            double heightM = heightCm / 100.0;
+            return weightKg / (heightM * heightM);
+        }
                     static string GetCategoryAndAdvice(double bmi, out string advice)
                     {
                         if (bmi < 18.5)
@@ -65,6 +65,13 @@ namespace IMT
                             return "Ожирение";
                         }
                     }
-
-                }
-            }
+                        static void ShowResult(double bmi, string category, string advice)
+                        {
+                            Console.WriteLine("\n========== ВАШ РЕЗУЛЬТАТ ==========");
+                            Console.WriteLine($"Индекс массы тела (ИМТ): {bmi:F1}");
+                            Console.WriteLine($"Категория:             {category}");
+                            Console.WriteLine($"Рекомендация:          {advice}");
+                            Console.WriteLine("===================================");
+                        }
+    }
+}
