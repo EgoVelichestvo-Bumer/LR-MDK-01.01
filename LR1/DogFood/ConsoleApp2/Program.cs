@@ -18,6 +18,28 @@ namespace DogFood
             Console.WriteLine("\nНажмите Enter для выхода...");
             Console.ReadLine();
         }
+
+        static double GetDogWeight()
+        {
+            return ReadPositiveDouble("Введите вес собаки (кг): ");
+        }
+
+        static int GetDogAgeType()
+        {
+            Console.WriteLine("Возраст собаки:");
+            Console.WriteLine("  1 — щенок");
+            Console.WriteLine("  2 — взрослая собака");
+            return ReadIntRange("Ваш выбор (1 или 2): ", 1, 2);
+        }
+
+        static int GetActivityLevel()
+        {
+            Console.WriteLine("Уровень активности:");
+            Console.WriteLine("  1 — низкая (мало гуляет)");
+            Console.WriteLine("  2 — средняя");
+            Console.WriteLine("  3 — высокая (много бегает, работает)");
+            return ReadIntRange("Ваш выбор (1, 2 или 3): ", 1, 3);
+        }
     }
     }
 }
