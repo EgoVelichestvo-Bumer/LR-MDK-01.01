@@ -23,6 +23,10 @@ namespace Delivery
         {
             return ReadPositiveDouble("Введите стоимость заказа (руб.): ");
         }
+        static double GetDistance()
+        {
+            return ReadPositiveDouble("Введите расстояние доставки (км): ");
+        }
     }
     }
 }
