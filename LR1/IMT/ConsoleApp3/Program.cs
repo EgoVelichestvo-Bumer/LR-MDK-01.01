@@ -67,11 +67,9 @@ namespace IMT
                     }
                         static void ShowResult(double bmi, string category, string advice)
                         {
-                            Console.WriteLine("\n========== ВАШ РЕЗУЛЬТАТ ==========");
                             Console.WriteLine($"Индекс массы тела (ИМТ): {bmi:F1}");
                             Console.WriteLine($"Категория:             {category}");
                             Console.WriteLine($"Рекомендация:          {advice}");
-                            Console.WriteLine("===================================");
-                        }
+}
     }
 }

@@ -1,49 +1,62 @@
 Отчет к ЛР1 Думцев Д П-30.
 Задача 1.
 1) разбиение задачи на подзадачи:
-а.Ввод стоимости заказа с проверкой (должна быть >= 0).
-б.Ввод расстояния доставки с проверкой (должно быть >= 0).
-в.Ввод времени заказа с проверкой (целое число от 0 до 23).
-г.Расчет базовой стоимости доставки.
-д.Расчет итоговой стоимости с учетом часа пик.
-е.Вывод результатов.
-2) Описание ф-ций:(Имя - Аргумент - тип значения)
+а. Ввод стоимости заказа с проверкой (должна быть >= 0).
+б. Расчет базовой стоимости доставки (150 руб.).
+в. Вывод результатов.
+2) Описание ф-ций: (Имя - Аргумент - тип значения)
 ReadPositiveDouble - string prompt - double
 ReadHour - string prompt - int
 CalculateDeliveryCost - double orderCost, double distance, int hour - double
 PrintResult - double deliveryCost, double orderCost - void
-3)Алгоритм подзадачи:
-а.Если orderCost >= 2000, вернуть 0.
-б.Иначе, базовая стоимость = 150.
-в.Если distance > 3, добавить (distance - 3) * 50.
-г.Если hour находится в диапазонах [12, 14) или [18, 20), умножить полученную стоимость на 1.3.
-д.Вернуть рассчитанную стоимость.
+3) Алгоритм подзадачи:
+а. Если orderCost >= 2000, вернуть 0 (доставка бесплатная).
+б. Иначе базовая стоимость = 150.
+в. Вернуть рассчитанную стоимость.
 4) реализация функции:
 using System;
 
 namespace Delivery
 {
-    class Delivery
+   public class Program
     {
         static void Main(string[] args)
-        {
-            double orderCost = ReadPositiveDouble("Введите стоимость заказа (руб.): ");
-            double distance = ReadPositiveDouble("Введите расстояние доставки (км): ");
-            int hour = ReadHour("Введите время заказа (час): ");
+        {         
+            double orderCost = GetOrderCost();
+
+            double distance = GetDistance();
+
+            int hour = GetDeliveryHour();
 
             double deliveryCost = CalculateDeliveryCost(orderCost, distance, hour);
-            PrintResult(deliveryCost, orderCost);
-        }
 
+            ShowResult(deliveryCost, orderCost);
+
+            Console.WriteLine("Нажмите Enter для выхода...");
+            Console.ReadLine();
+        }
+        static double GetOrderCost()
+        {
+            return ReadPositiveDouble("Введите стоимость заказа (руб.): ");
+        }
+        static double GetDistance()
+        {
+            return ReadPositiveDouble("Введите расстояние доставки (км): ");
+        }
+        static int GetDeliveryHour()
+        {
+            return ReadHour("Введите время заказа (час от 0 до 23): ");
+        }
         static double ReadPositiveDouble(string prompt)
         {
             double value;
-            while (true)
+            while (true) 
             {
                 Console.Write(prompt);
+
                 if (double.TryParse(Console.ReadLine(), out value) && value >= 0)
                 {
-                    return value;
+                    return value; 
                 }
                 Console.WriteLine("Ошибка: введите корректное неотрицательное число.");
             }
@@ -55,6 +68,7 @@ namespace Delivery
             while (true)
             {
                 Console.Write(prompt);
+
                 if (int.TryParse(Console.ReadLine(), out value) && value >= 0 && value <= 23)
                 {
                     return value;
@@ -62,74 +76,88 @@ namespace Delivery
                 Console.WriteLine("Ошибка: введите целое число от 0 до 23.");
             }
         }
-
         static double CalculateDeliveryCost(double orderCost, double distance, int hour)
         {
+
             if (orderCost >= 2000)
+            {
                 return 0;
+            }
 
             double cost = 150;
-            if (distance > 3)
-            {
-                cost += (distance - 3) * 50;
-            }
-
-            if ((hour >= 12 && hour < 14) || (hour >= 18 && hour < 20))
-            {
-                cost *= 1.3;
-            }
-
             return cost;
         }
-
-        static void PrintResult(double deliveryCost, double orderCost)
+        static void ShowResult(double deliveryCost, double orderCost)
         {
-            Console.WriteLine($"Стоимость доставки: {deliveryCost} руб.");
-            Console.WriteLine($"Итого к оплате: {orderCost + deliveryCost} руб.");
+            Console.WriteLine($"Стоимость доставки: {deliveryCost:F2} руб."); 
+            Console.WriteLine($"Стоимость заказа:   {orderCost:F2} руб.");
+            Console.WriteLine($"ИТОГО К ОПЛАТЕ:     {orderCost + deliveryCost:F2} руб.");
         }
     }
 }
-
-
-
+        
 Задача 2.
-1)Разбиение задачи на подзадачи:
-а.Ввод веса собаки (> 0).
-б.Ввод возраста (1 или 2).
-в.Ввод уровня активности (1, 2 или 3).
-г.Расчет суточной нормы.
-д.Расчет размера одной порции.
-е.Вывод результатов.
-2) Описание ф-ций:(Имя - Аргумент - тип значения)
+1) разбиение задачи на подзадачи:
+а. Ввод веса собаки (> 0).
+б. Ввод возраста (1 — щенок, 2 — взрослая).
+в. Ввод уровня активности (1, 2 или 3).
+г. Расчет суточной нормы корма.
+д. Расчет размера одной порции (2 кормления в день).
+е. Вывод результатов.
+2) Описание ф-ций: (Имя - Аргумент - тип значения)
 ReadPositiveDouble - string prompt - double
 ReadIntRange - string prompt, int min, int max - int
 CalculateDailyNorm - double weight, int ageType, int activityLevel - double
 PrintResult - double dailyNorm - void
-3)Алгоритм подзадачи:
-а.Определить базовую норму на кг: если возраст 1 (щенок) -> 55г, иначе -> 30г.
-б.Умножить базовую норму на вес.
-в.Применить коэффициент активности:
-г.1 (низкая) -> * 0.9
-д.2 (средняя) -> * 1.0
-е.3 (высокая) -> * 1.2
-ж.Вернуть результат.
+3) Алгоритм подзадачи:
+а. Определить базовую норму на кг: если возраст 1 (щенок) — 55 г, иначе — 30 г.
+б. Умножить базовую норму на вес собаки.
+в. Применить коэффициент активности: 1 (низкая) — умножить на 0.9; 2 (средняя) — умножить на 1.0; 3 (высокая) — умножить на 1.2.
+г. Вернуть полученный результат.
+д. Вывести суточную норму и размер одной порции (норма / 2).
 4) реализация функции:
 using System;
 
 namespace DogFood
 {
-    class Dog
+   public class Program
     {
+
         static void Main(string[] args)
         {
-            double weight = ReadPositiveDouble("Введите вес собаки (кг): ");
-            int age = ReadIntRange("Введите возраст (1 — щенок, 2 — взрослая): ", 1, 2);
-            int activity = ReadIntRange("Введите активность (1 — низкая, 2 — средняя, 3 — высокая): ", 1, 3);
+            double weight = GetDogWeight();
 
-            double dailyNorm = CalculateDailyNorm(weight, age, activity);
-            PrintResult(dailyNorm);
+            int ageType = GetDogAgeType();
+
+            int activityLevel = GetActivityLevel();
+
+            double dailyNorm = CalculateDailyNorm(weight, ageType, activityLevel);
+            ShowResult(dailyNorm);
+            Console.WriteLine("\nНажмите Enter для выхода...");
+            Console.ReadLine();
         }
 
+        static double GetDogWeight()
+        {
+            return ReadPositiveDouble("Введите вес собаки (кг): ");
+        }
+
+        static int GetDogAgeType()
+        {
+            Console.WriteLine("Возраст собаки:");
+            Console.WriteLine("  1 — щенок");
+            Console.WriteLine("  2 — взрослая собака");
+            return ReadIntRange("Ваш выбор (1 или 2): ", 1, 2);
+        }
+
+        static int GetActivityLevel()
+        {
+            Console.WriteLine("Уровень активности:");
+            Console.WriteLine("  1 — низкая (мало гуляет)");
+            Console.WriteLine("  2 — средняя");
+            Console.WriteLine("  3 — высокая (много бегает, работает)");
+            return ReadIntRange("Ваш выбор (1, 2 или 3): ", 1, 3);
+        }
         static double ReadPositiveDouble(string prompt)
         {
             double value;
@@ -143,6 +171,7 @@ namespace DogFood
                 Console.WriteLine("Ошибка: введите число больше нуля.");
             }
         }
+
 
         static int ReadIntRange(string prompt, int min, int max)
         {
@@ -158,46 +187,54 @@ namespace DogFood
             }
         }
 
-        static double CalculateDailyNorm(double weight, int ageType, int activityLevel)
-        {
-            double basePerKg = (ageType == 1) ? 55 : 30;
-            double norm = basePerKg * weight;
-
-            switch (activityLevel)
+            static double CalculateDailyNorm(double weight, int ageType, int activityLevel)
             {
-                case 1: norm *= 0.9; break;
-                case 2: norm *= 1.0; break;
-                case 3: norm *= 1.2; break;
-            }
-            return norm;
-        }
+                double basePerKg = (ageType == 1) ? 55 : 30;
+                double norm = basePerKg * weight;
 
-        static void PrintResult(double dailyNorm)
-        {
-            Console.WriteLine($"Суточная норма корма: {dailyNorm} г");
-            Console.WriteLine($"Одна порция (2 кормления в день): {dailyNorm / 2} г");
-        }
+                if (activityLevel == 1)
+                {
+                    norm *= 0.9;
+                }
+                else if (activityLevel == 3)
+                {
+                    norm *= 1.2;
+                }
+
+                return norm;
+            }
+            static void ShowResult(double dailyNorm)
+            {
+                Console.WriteLine($"Суточная норма корма: {dailyNorm:F2} г");
+                Console.WriteLine($"Одна порция (2 кормления в день): {dailyNorm / 2:F2} г");
+
+            }
     }
 }
 
-
 Задача 3.
-1)Разбиение задачи на подзадачи:
-а.Ввод роста (см) (> 0).
-б.Ввод веса (кг) (> 0).
-в.Расчет ИМТ.
-г.Определение категории и рекомендации.
-д.Вывод результатов.
-2) Описание ф-ций:(Имя - Аргумент - тип значения)
+1) разбиение задачи на подзадачи:
+а. Ввод роста в сантиметрах (> 0).
+б. Ввод веса в килограммах (> 0).
+в. Расчет индекса массы тела (ИМТ).
+г. Определение категории и рекомендации.
+д. Вывод результатов.
+2) Описание ф-ций: (Имя - Аргумент - тип значения)
 ReadPositiveDouble - string prompt - double
 CalculateBMI - double heightCm, double weightKg - double
 GetCategoryAndAdvice - double bmi, out string advice - string
 PrintResult - double bmi, string category, string advice - void
-3)Алгоритм подзадачи:
-а.Перевести рост из см в метры (heightM = heightCm / 100).
-б.Вычислить weight / (heightM * heightM).
-в.Округлить до 1 знака после запятой (для красивого вывода, хотя расчет ведется точно).
-4) Реализация функции:
+3) Алгоритм подзадачи:
+а. Перевести рост из сантиметров в метры: heightM = heightCm / 100.
+б. Вычислить ИМТ по формуле: weight / (heightM * heightM).
+в. Определить категорию:
+ИМТ < 18.5 — "Недостаточный вес", рекомендация: "Увеличьте калорийность рациона."
+ИМТ от 18.5 до 25 — "Норма", рекомендация: "Поддерживайте текущий образ жизни."
+ИМТ от 25 до 30 — "Избыточный вес", рекомендация: "Увеличьте физическую активность."
+ИМТ > 30 — "Ожирение", рекомендация: "Обратитесь к врачу."
+г. Вернуть категорию и через out-параметр — рекомендацию.
+д. Вывести ИМТ (округленный до 1 знака), категорию и рекомендацию.
+4) реализация функции:
 using System;
 
 namespace IMT
@@ -206,16 +243,24 @@ namespace IMT
     {
         static void Main(string[] args)
         {
-            double height = ReadPositiveDouble("Введите рост (см): ");
-            double weight = ReadPositiveDouble("Введите вес (кг): ");
-
+            double height = GetHeight();
+            double weight = GetWeight();
             double bmi = CalculateBMI(height, weight);
-            string advice;
-            string category = GetCategoryAndAdvice(bmi, out advice);
 
-            PrintResult(bmi, category, advice);
+            string category = GetCategoryAndAdvice(bmi, out string advice);
+
+            ShowResult(bmi, category, advice);
+            Console.WriteLine("\nНажмите Enter для выхода...");
+            Console.ReadLine();
         }
-
+            static double GetHeight()
+            {
+                return ReadPositiveDouble("Введите ваш рост (см): ");
+            }
+            static double GetWeight()
+            {
+                return ReadPositiveDouble("Введите ваш вес (кг): ");
+            }
         static double ReadPositiveDouble(string prompt)
         {
             double value;
@@ -229,93 +274,108 @@ namespace IMT
                 Console.WriteLine("Ошибка: введите число больше нуля.");
             }
         }
-
         static double CalculateBMI(double heightCm, double weightKg)
         {
             double heightM = heightCm / 100.0;
             return weightKg / (heightM * heightM);
         }
-
-        static string GetCategoryAndAdvice(double bmi, out string advice)
-        {
-            if (bmi < 18.5)
-            {
-                advice = "Увеличьте калорийность рациона.";
-                return "Недостаточный вес";
-            }
-            else if (bmi >= 18.5 && bmi <= 25)
-            {
-                advice = "Поддерживайте текущий образ жизни.";
-                return "Норма";
-            }
-            else if (bmi > 25 && bmi <= 30)
-            {
-                advice = "Увеличьте физическую активность.";
-                return "Избыточный вес";
-            }
-            else
-            {
-                advice = "Обратитесь к врачу.";
-                return "Ожирение";
-            }
-        }
-
-        static void PrintResult(double bmi, string category, string advice)
-        {
-            Console.WriteLine($"ИМТ: {Math.Round(bmi, 1)}");
-            Console.WriteLine($"Категория: {category}");
-            Console.WriteLine($"Рекомендация: {advice}");
-        }
+                    static string GetCategoryAndAdvice(double bmi, out string advice)
+                    {
+                        if (bmi < 18.5)
+                        {
+                            advice = "Увеличьте калорийность рациона.";
+                            return "Недостаточный вес";
+                        }
+                        else if (bmi >= 18.5 && bmi <= 25)
+                        {
+                            advice = "Поддерживайте текущий образ жизни.";
+                            return "Норма";
+                        }
+                        else if (bmi > 25 && bmi <= 30)
+                        {
+                            advice = "Увеличьте физическую активность.";
+                            return "Избыточный вес";
+                        }
+                        else
+                        {
+                            advice = "Обратитесь к врачу.";
+                            return "Ожирение";
+                        }
+                    }
+                        static void ShowResult(double bmi, string category, string advice)
+                        {
+                            Console.WriteLine($"Индекс массы тела (ИМТ): {bmi:F1}");
+                            Console.WriteLine($"Категория:             {category}");
+                            Console.WriteLine($"Рекомендация:          {advice}");
+                        }
     }
 }
-
-
-
- Задача 4.
-1) Разбиение задачи на подзадачи:
-а.Ввод размеров комнаты (длина, ширина, высота) (> 0).
-б.Ввод размеров рулона (ширина, длина) (> 0).
-в.Расчет количества полос на периметр.
-г.Расчет количества полос из одного рулона.
-д.Расчет общего количества рулонов.
-е.Вывод результатов.
-2)Описание ф-ций:(Имя - Аргумент - тип значения)
+Задача 4.
+1) разбиение задачи на подзадачи:
+а. Ввод размеров комнаты (длина, ширина, высота) (> 0).
+б. Ввод размеров рулона обоев (ширина, длина) (> 0).
+в. Расчет количества полос на периметр комнаты.
+г. Расчет количества полос, которые можно получить из одного рулона.
+д. Расчет общего количества рулонов.
+е. Вывод результатов.
+2) Описание ф-ций: (Имя - Аргумент - тип значения)
 ReadPositiveDouble - string prompt - double
 CalculateStripsPerRoom - double length, double width, double rollWidth - int
 CalculateStripsPerRoll - double rollLength, double roomHeight - int
 CalculateTotalRolls - int totalStrips, int stripsPerRoll - int
-PrintResult - отсутствует - void
-3)Алгортим подзадачи:
-а.Периметр = (length + width) * 2.
-б.Количество полос = Периметр / rollWidth.
-в.Округлить вверх (Math.Ceiling).
-4) Реализация функции:
+3) Алгоритм подзадачи:
+а. Вычислить периметр комнаты: (length + width) * 2.
+б. Количество полос на комнату = периметр / ширину рулона, округлить вверх (Math.Ceiling).
+в. Длина одной полосы = высота комнаты + 0.1 м (запас).
+г. Количество полос из одного рулона = длина рулона / длина полосы, округлить вниз (целочисленное деление).
+д. Общее количество рулонов = количество полос на комнату / полос из одного рулона, округлить вверх.
+е. Если полос из одного рулона получилось 0, считать его за 1, чтобы избежать деления на ноль.
+4) реализация функции:
 using System;
 
-namespace Task4_Wallpaper
+namespace Wallpaper
 {
-    class Program
+  public  class Program
     {
         static void Main(string[] args)
         {
-            double roomLen = ReadPositiveDouble("Введите длину комнаты (м): ");
-            double roomWid = ReadPositiveDouble("Введите ширину комнаты (м): ");
-            double roomHgt = ReadPositiveDouble("Введите высоту комнаты (м): ");
-            
-            double rollWid = ReadPositiveDouble("Введите ширину рулона (м): ");
-            double rollLen = ReadPositiveDouble("Введите длину рулона (м): ");
+            double roomLen = GetRoomLength();
+            double roomWid = GetRoomWidth();
+            double roomHgt = GetRoomHeight();
+            double rollWid = GetRollWidth();
+            double rollLen = GetRollLength();
 
             int stripsNeeded = CalculateStripsPerRoom(roomLen, roomWid, rollWid);
+
             int stripsFromOneRoll = CalculateStripsPerRoll(rollLen, roomHgt);
-            
-            if (stripsFromOneRoll == 0) stripsFromOneRoll = 1; 
 
             int totalRolls = CalculateTotalRolls(stripsNeeded, stripsFromOneRoll);
 
-            Console.WriteLine($"Количество полос: {stripsNeeded}");
-            Console.WriteLine($"Количество рулонов: {totalRolls}");
-        }
+            ShowResult(stripsNeeded, totalRolls);
 
+            Console.WriteLine("\nНажмите Enter для выхода...");
+            Console.ReadLine();
+        }
+        static double GetRoomLength()
+        {
+            return ReadPositiveDouble("Введите длину комнаты (м): ");
+        }
+        static double GetRoomWidth()
+        {
+            return ReadPositiveDouble("Введите ширину комнаты (м): ");
+        }
+        static double GetRoomHeight()
+        {
+            return ReadPositiveDouble("Введите высоту комнаты (м): ");
+        }
+        static double GetRollWidth()
+        {
+            return ReadPositiveDouble("Введите ширину рулона (м): ");
+        }
+        static double GetRollLength()
+        {
+            return ReadPositiveDouble("Введите длину рулона (м): ");
+        }
         static double ReadPositiveDouble(string prompt)
         {
             double value;
@@ -329,89 +389,118 @@ namespace Task4_Wallpaper
                 Console.WriteLine("Ошибка: введите число больше нуля.");
             }
         }
-
-        static int CalculateStripsPerRoom(double length, double width, double rollWidth)
-        {
-            double perimeter = (length + width) * 2;
-            return (int)Math.Ceiling(perimeter / rollWidth);
-        }
-
-        static int CalculateStripsPerRoll(double rollLength, double roomHeight)
-        {
-            double stripHeight = roomHeight + 0.1; 
-            if (stripHeight <= 0) return 0;
-            return (int)(rollLength / stripHeight);
-        }
-
-        static int CalculateTotalRolls(int totalStrips, int stripsPerRoll)
-        {
-            if (stripsPerRoll <= 0) return 0; 
-            return (int)Math.Ceiling((double)totalStrips / stripsPerRoll);
-        }
-    }
+            static int CalculateStripsPerRoom(double length, double width, double rollWidth)
+            {
+                double perimeter = (length + width) * 2;
+                return (int)Math.Ceiling(perimeter / rollWidth);
+            }
+            static int CalculateStripsPerRoll(double rollLength, double roomHeight)
+            {
+                double stripHeight = roomHeight + 0.1;
+                if (stripHeight <= 0)
+                {
+                    return 0;
+                }
+                return (int)(rollLength / stripHeight);
+            }
+            static int CalculateTotalRolls(int totalStrips, int stripsPerRoll)
+            {
+                if (stripsPerRoll <= 0)
+                {
+                    return 0;
+                }
+                return (int)Math.Ceiling((double)totalStrips / stripsPerRoll);
+            }
+        
+            static void ShowResult(int stripsNeeded, int totalRolls)
+            {
+                Console.WriteLine($"Количество полос:    {stripsNeeded}");
+                Console.WriteLine($"Количество рулонов:  {totalRolls}");
+            }
+  }
 }
-
 
 Задача 5.
 1) разбиение задачи на подзадачи:
-а.Ввод времени отправления (часы 0-23, минуты 0-59).
-б.Ввод расстояния (> 0) и скорости (> 0).
-в.Ввод количества остановок (>= 0) и длительности одной остановки (>= 0).
-г.Расчет времени в пути (минуты).
-д.Расчет времени прибытия.
-е.Вывод результатов.
-2)Описание ф-ций:(Имя - Аргумент - тип значения)
-ReadIntRange - prompt, min, max - int
-ReadPositiveDouble - prompt - double
-ReadNonNegativeInt - prompt - int
-CalculateTravelTimeMinutes - dist, speed, stopsCount, stopDuration - double
-CalculateArrivalTime - startH, startM, travelMinutes - string
-PrintResult - отсутствует - void
-3)Алгоритм подзадачи:
-а.Время движения (часы) = distance / speed.
-б.Время движения (минуты) = TimeHours * 60.
-в.Время остановок = stopsCount * stopDuration.
-г.Сумма минут.
-4) Реализация функции:
+а. Ввод времени отправления (часы 0–23, минуты 0–59).
+б. Ввод расстояния (> 0) и средней скорости (> 0).
+в. Ввод количества остановок (>= 0) и длительности одной остановки (>= 0).
+г. Расчет времени в пути в минутах.
+д. Расчет времени прибытия.
+е. Вывод результатов.
+2) Описание ф-ций: (Имя - Аргумент - тип значения)
+ReadIntRange - string prompt, int min, int max - int
+ReadPositiveDouble - string prompt - double
+ReadNonNegativeInt - string prompt - int
+ReadNonNegativeDouble - string prompt - double
+CalculateTravelTimeMinutes - double dist, double speed, int stops, double stopDur - double
+CalculateArrivalTime - int h, int m, double travelMinutesTotal - string
+3) Алгоритм подзадачи:
+а. Время движения в часах = distance / speed.
+б. Время движения в минутах = время в часах * 60.
+в. Время остановок = количество остановок * длительность одной остановки.
+г. Общее время в пути = время движения + время остановок.
+д. Часы и минуты в пути выделить целочисленным делением и остатком от деления на 60.
+е. Время прибытия: перевести время отправления в минуты (h * 60 + m), прибавить общее время в пути, взять остаток от деления на 24*60 (чтобы учесть переход через сутки), обратно разбить на часы и минуты.
+ж. Вывести время в пути (часы и минуты) и время прибытия в формате ЧЧ:ММ.
+4) реализация функции:
 using System;
 
-namespace Task5_Train
+namespace Train
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            int startH = ReadIntRange("Введите время отправления (часы): ", 0, 23);
-            int startM = ReadIntRange("Введите время отправления (минуты): ", 0, 59);
-            
-            double distance = ReadPositiveDouble("Введите расстояние (км): ");
-            double speed = ReadPositiveDouble("Введите среднюю скорость (км/ч): ");
-            
-            int stops = ReadNonNegativeInt("Введите число остановок: ");
-            double stopDur = ReadNonNegativeDouble("Введите время остановки (мин): ");
-
-            double travelMinutes = CalculateTravelTimeMinutes(distance, speed, stops, stopDur);
-            
+            int startH = GetDepartureHour();
+            int startM = GetDepartureMinute();
+            double distance = GetDistance();
+            double speed = GetSpeed();
+            int stops = GetNumberOfStops();
+            double stopDuration = GetStopDuration();
+            double travelMinutes = CalculateTravelTimeMinutes(distance, speed, stops, stopDuration);
             int travelH = (int)(travelMinutes / 60);
             int travelM = (int)(travelMinutes % 60);
-            Console.WriteLine($"Время в пути: {travelH} ч {travelM} мин");
-
             string arrivalTime = CalculateArrivalTime(startH, startM, travelMinutes);
-            Console.WriteLine($"Время прибытия: {arrivalTime}");
-        }
 
-        static int ReadIntRange(string prompt, int min, int max)
+
+            ShowResult(travelH, travelM, arrivalTime);
+
+
+            Console.WriteLine("\nНажмите Enter для выхода...");
+            Console.ReadLine();
+        }
+        static int GetDepartureHour()
         {
-            int value;
-            while (true)
-            {
-                Console.Write(prompt);
-                if (int.TryParse(Console.ReadLine(), out value) && value >= min && value <= max)
-                    return value;
-                Console.WriteLine($"Ошибка: введите число от {min} до {max}.");
-            }
+            return ReadIntRange("Введите время отправления (часы, 0-23): ", 0, 23);
         }
+        static int GetDepartureMinute()
+        {
+            return ReadIntRange("Введите время отправления (минуты, 0-59): ", 0, 59);
+        }
+        static double GetDistance()
+        {
+            return ReadPositiveDouble("Введите расстояние (км): ");
+        }
+        static double GetSpeed()
+        {
+            return ReadPositiveDouble("Введите среднюю скорость (км/ч): ");
+        }
+        static int GetNumberOfStops()
+        {
+            return ReadNonNegativeInt("Введите число остановок: ");
+        }
+        static double GetStopDuration()
+        {
+            return ReadNonNegativeDouble("Введите время одной остановки (мин): ");
+        }
+        static double CalculateTravelTimeMinutes(double dist, double speed, int stops, double stopDur)
+        {
+            double moveMinutes = (dist / speed) * 60;
+            double stopMinutes = stops * stopDur;
 
+            return moveMinutes + stopMinutes;
+        }
         static double ReadPositiveDouble(string prompt)
         {
             double value;
@@ -435,10 +524,10 @@ namespace Task5_Train
                 Console.WriteLine("Ошибка: введите неотрицательное целое число.");
             }
         }
-        
+
         static double ReadNonNegativeDouble(string prompt)
         {
-             double value;
+            double value;
             while (true)
             {
                 Console.Write(prompt);
@@ -447,25 +536,33 @@ namespace Task5_Train
                 Console.WriteLine("Ошибка: введите неотрицательное число.");
             }
         }
-
-        static double CalculateTravelTimeMinutes(double dist, double speed, int stops, double stopDur)
+        static int ReadIntRange(string prompt, int min, int max)
         {
-            double moveMinutes = (dist / speed) * 60;
-            double stopMinutes = stops * stopDur;
-            return moveMinutes + stopMinutes;
+            int value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out value) && value >= min && value <= max)
+                {
+                    return value;
+                }
+                Console.WriteLine($"Ошибка: введите число от {min} до {max}.");
+            }
         }
+            static string CalculateArrivalTime(int h, int m, double travelMinutesTotal)
+            {
+                int startTotalMinutes = h * 60 + m;
+                int arrivalTotalMinutes = (int)(startTotalMinutes + travelMinutesTotal);
+                arrivalTotalMinutes = arrivalTotalMinutes % (24 * 60);
+                int arrH = arrivalTotalMinutes / 60;
+                int arrM = arrivalTotalMinutes % 60;
 
-        static string CalculateArrivalTime(int h, int m, double travelMinutesTotal)
-        {
-            int startTotalMinutes = h * 60 + m;
-            int arrivalTotalMinutes = (int)(startTotalMinutes + travelMinutesTotal);
-            
-            arrivalTotalMinutes = arrivalTotalMinutes % (24 * 60);
-            
-            int arrH = arrivalTotalMinutes / 60;
-            int arrM = arrivalTotalMinutes % 60;
-            
-            return $"{arrH:D2}:{arrM:D2}";
+                return $"{arrH:D2}:{arrM:D2}";
         }
+            static void ShowResult(int travelH, int travelM, string arrivalTime)
+            {
+                Console.WriteLine($"Время в пути:      {travelH} ч {travelM} мин");
+                Console.WriteLine($"Время прибытия:    {arrivalTime}");
+            }
     }
 }
