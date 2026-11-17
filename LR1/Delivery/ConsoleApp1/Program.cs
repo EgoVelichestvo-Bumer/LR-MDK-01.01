@@ -10,9 +10,8 @@ namespace Delivery
 
             double distance = GetDistance();
 
-            int hour = GetDeliveryHour();
 
-            double deliveryCost = CalculateDeliveryCost(orderCost, distance, hour);
+            double deliveryCost = CalculateDeliveryCost(orderCost, distance);
 
             ShowResult(deliveryCost, orderCost);
 
@@ -26,10 +25,6 @@ namespace Delivery
         static double GetDistance()
         {
             return ReadPositiveDouble("Введите расстояние доставки (км): ");
-        }
-        static int GetDeliveryHour()
-        {
-            return ReadHour("Введите время заказа (час от 0 до 23): ");
         }
         static double ReadPositiveDouble(string prompt)
         {
@@ -45,22 +40,9 @@ namespace Delivery
                 Console.WriteLine("Ошибка: введите корректное неотрицательное число.");
             }
         }
-
-        static int ReadHour(string prompt)
-        {
-            int value;
-            while (true)
-            {
-                Console.Write(prompt);
-
-                if (int.TryParse(Console.ReadLine(), out value) && value >= 0 && value <= 23)
-                {
-                    return value;
-                }
-                Console.WriteLine("Ошибка: введите целое число от 0 до 23.");
-            }
-        }
-        static double CalculateDeliveryCost(double orderCost, double distance, int hour)
+            
+        
+        static double CalculateDeliveryCost(double orderCost, double distance)
         {
 
             if (orderCost >= 2000)
